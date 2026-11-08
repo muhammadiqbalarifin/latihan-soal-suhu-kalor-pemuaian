@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Latihan Soal Pemuaian, Kalor, dan Suhu</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f6f7f9;color:#1d2330;font:16px/1.5 "Segoe UI",Tahoma,Arial,sans-serif}
+main{max-width:720px;margin:0 auto;padding:16px}
+h1{font-size:22px;margin:0}h2{font-size:18px;margin:0 0 8px}
+.sub{color:#5d6677;font-size:14px;margin:2px 0 12px}.note{font-size:14px;color:#5d6677}
+.card{background:#fff;border:1px solid #d9dde5;border-radius:14px;padding:16px;margin-bottom:12px}
+.btn{margin:8px 8px 4px 0;padding:10px 16px;border:0;border-radius:10px;background:#d9480f;color:#fff;font:inherit;cursor:pointer}
+.btn.alt{background:#f6f7f9;color:#1d2330;border:1px solid #d9dde5}
+input[type=text]{width:100%;padding:9px 10px;border:1px solid #d9dde5;border-radius:10px;font:inherit;margin:4px 0 8px}
+.top{display:-ms-flexbox;display:flex;-ms-flex-pack:justify;justify-content:space-between;font-size:14px;color:#5d6677}
+.bar{height:8px;background:#e6e9ef;border-radius:4px;margin:6px 0 14px;overflow:hidden}.bar i{display:block;height:100%;width:0;background:#1c7ed6}
+.qt{font-size:18px;font-weight:600;margin:0 0 12px}
+.opt{display:block;width:100%;text-align:left;margin:0 0 8px;padding:10px 12px;border:1px solid #d9dde5;border-radius:10px;background:#fff;color:#1d2330;font:inherit;cursor:pointer}
+.opt:hover{border-color:#1c7ed6}.opt.sel{background:#e7f1fb;border-color:#1c7ed6}
+.big{font-size:30px;font-weight:700;margin:2px 0}
+.rw{display:-ms-flexbox;display:flex;-ms-flex-align:center;align-items:center;margin:4px 0 10px}
+.rk{-ms-flex:0 0 auto;flex:0 0 auto;min-width:150px;text-align:center;margin-right:18px;font:italic 900 104px/1.1 "Arial Black",Impact,"Segoe UI",Arial,sans-serif;letter-spacing:-4px;text-shadow:0 5px 0 rgba(0,0,0,.18);animation:pop .7s ease-out}
+.ri p{margin:2px 0}.cap{font-size:18px;font-weight:700;font-style:italic}
+@keyframes pop{0%{transform:scale(.3);opacity:0}70%{transform:scale(1.12);opacity:1}100%{transform:scale(1)}}
+@media (max-width:480px){.rk{font-size:80px;min-width:110px;margin-right:12px}}
+@media (prefers-reduced-motion:reduce){.rk{animation:none}}
+table{border-collapse:collapse;width:100%;font-size:14px;margin:8px 0}th,td{border-bottom:1px solid #d9dde5;padding:5px 6px;text-align:center}th{color:#5d6677}td:first-child,th:first-child{text-align:left}
+@media print{.noprint{display:none}}
+</style></head><body><main>
+<h1>Latihan Soal: Pemuaian, Kalor, dan Suhu</h1>
+<p class="sub">Asesmen kognitif · IPA Kelas VII</p>
+<div id="s0" class="card">
+<h2>Siap berlatih?</h2>
+<p>Ada 18 soal pilihan ganda dari tiga topik: pemuaian, kalor, dan suhu. Skor tiap soal: benar = 1, salah = 0.</p>
+<p>Pilih satu jawaban lalu tekan Lanjut. Jawaban yang benar dan hasilmu baru ditampilkan setelah semua soal selesai dikerjakan.</p>
+<p>Setiap soal punya beberapa versi, angka pada soal hitungan diacak, dan urutan pilihan jawaban ikut diacak, jadi soalnya berbeda setiap kali kamu berlatih. Siapkan kertas dan alat tulis untuk menghitung.</p>
+<label for="nm" class="note">Nama (boleh dikosongkan)</label>
+<input type="text" id="nm" maxlength="40">
+<button class="btn" onclick="start()">Mulai latihan</button></div>
+<div id="s1" class="card" style="display:none">
+<div class="top"><span id="pg"></span><span id="tg"></span></div>
+<div class="bar"><i id="bf"></i></div>
+<p class="qt" id="qt"></p><div id="op"></div>
+<button class="btn" id="nx" style="display:none" onclick="nextQ()">Lanjut</button></div>
+<div id="s2" style="display:none"></div>
+</main>
+<script>
+function $(id){return document.getElementById(id)}
+function pick(a){return a[Math.floor(Math.random()*a.length)]}
+function shuf(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
+function f(x,d){var s=Math.abs(x).toFixed(d||0),p=s.split('.'),i=p[0].replace(/\B(?=(\d{3})+(?!\d))/g,'.'),r=p[1]?p[1].replace(/0+$/,''):'';return (x<0?'\u2212':'')+i+(r?','+r:'')}
+function T(s,o){for(var k in o)s=s.split('{'+k+'}').join(o[k]);return s}
+var S=[
+[['Pemuaian','C1','Peristiwa bertambahnya ukuran suatu zat ketika menerima kalor disebut ...','pemuaian','penyusutan','peleburan','pembekuan'],
+['Pemuaian','C1','Bertambah panjangnya batang logam saat dipanaskan merupakan contoh peristiwa ...','pemuaian','penyusutan','pembekuan','penguapan'],
+['Pemuaian','C1','Zat padat, cair, dan gas akan bertambah volumenya jika suhunya naik. Gejala ini dinamakan ...','pemuaian','pengembunan','pembekuan','penyubliman']],
+[['Pemuaian','C2','Sebuah balon dipasang pada mulut botol. Ketika botol direndam di air hangat, balon menggembung. Hal ini terjadi karena ...','udara di dalam botol menerima kalor sehingga memuai','balon menerima kalor sehingga karetnya menyusut','jumlah udara di dalam botol bertambah','udara di luar botol masuk ke dalam balon'],
+['Pemuaian','C2','Botol kosong ditutup dengan balon, lalu botol dijemur di bawah terik matahari dan balon menggembung. Penyebabnya adalah ...','udara di dalam botol memuai karena menerima kalor','karet balon memuai lebih besar daripada udara','udara dari luar botol masuk ke dalam balon','massa udara di dalam botol bertambah'],
+['Pemuaian','C2','Bola pingpong yang penyok dicelupkan ke air panas dan kembali membulat. Hal ini terjadi karena ...','udara di dalam bola menerima kalor sehingga memuai','bola menyusut karena menerima kalor','air panas masuk ke dalam bola','plastik bola menjadi lebih keras']],
+[['Pemuaian','C1','Alat yang bekerja berdasarkan pemuaian zat cair adalah ...','termometer raksa','termostat pada setrika listrik','pelek besi pada roda delman','sambungan rel kereta api'],
+['Pemuaian','C1','Termometer alkohol dapat menunjukkan suhu karena alkohol di dalamnya ...','memuai ketika suhunya naik','menyusut ketika suhunya naik','menguap seluruhnya','membeku ketika suhunya naik'],
+['Pemuaian','C1','Manakah alat berikut yang prinsip kerjanya memanfaatkan pemuaian zat cair?','termometer raksa','keping bimetal pada alarm kebakaran','pelek besi pada roda delman','sambungan pada jembatan baja']],
+[['Pemuaian','C2','Sambungan antara dua batang rel kereta api diberi celah kecil. Tujuannya adalah ...','agar rel tidak melengkung ketika memuai pada cuaca panas','agar rel mudah dipasang','agar rel tidak berkarat','agar kereta berjalan lebih cepat'],
+['Pemuaian','C2','Kabel listrik di antara dua tiang dipasang agak kendur. Hal ini dilakukan agar ...','kabel tidak putus ketika menyusut pada malam yang dingin','kabel tidak pernah memuai','kabel lebih mudah dipasang','arus listrik mengalir lebih cepat'],
+['Pemuaian','C2','Pada sambungan jembatan baja selalu ada celah. Celah itu berfungsi ...','memberi ruang agar jembatan dapat memuai saat panas','agar jembatan lebih ringan','agar jembatan tidak berkarat','agar kendaraan melaju lebih cepat']],
+[['Kalor','C1','Kalor berpindah secara alami dari ...','benda bersuhu tinggi ke benda bersuhu rendah','benda bersuhu rendah ke benda bersuhu tinggi','benda bermassa kecil ke benda bermassa besar','benda padat ke benda cair'],
+['Kalor','C1','Segelas air panas didiamkan di ruangan yang sejuk sehingga lama-kelamaan menjadi dingin. Hal ini terjadi karena kalor berpindah dari ...','air panas ke udara sekitar','udara sekitar ke air panas','udara dingin masuk ke dalam air','sendok ke air panas'],
+['Kalor','C1','Es batu diletakkan di telapak tangan dan terasa dingin. Pada peristiwa ini, kalor berpindah dari ...','tangan ke es batu','es batu ke tangan','tangan ke udara saja','es batu ke udara']],
+[['Kalor','C2','Pada pembuatan es krim dengan dua kantong plastik, adonan menjadi membeku karena kalor berpindah dari ...','adonan ke campuran es–garam','campuran es–garam ke adonan','tangan ke adonan','udara sekitar ke adonan'],
+['Kalor','C2','Saat membuat es krim dengan kantong plastik, kantong luar yang berisi es–garam terasa sangat dingin di tangan karena ...','kalor dari tangan berpindah ke campuran es–garam','kalor dari campuran es–garam berpindah ke tangan','campuran es–garam tidak menyerap kalor','tangan memberikan dingin ke kantong'],
+['Kalor','C2','Pada pembuatan es krim, suhu adonan turun hingga membeku. Kalor yang dilepaskan adonan diserap oleh ...','campuran es–garam','udara di dalam ruangan','tangan yang memegang kantong','sendok pengaduk']],
+[['Kalor','C1','Banyaknya kalor yang diserap 1 kg es untuk melebur menjadi air pada titik leburnya tanpa mengubah suhu disebut ...','kalor lebur','kalor jenis','kalor uap','kapasitas kalor'],
+['Kalor','C1','Kalor yang dibutuhkan 1 kg zat padat untuk berubah menjadi cair pada titik leburnya disebut ...','kalor lebur','kalor jenis','kalor uap','kapasitas kalor'],
+['Kalor','C1','Es yang sedang melebur pada 0 °C tetap bersuhu 0 °C walaupun terus menerima kalor. Kalor yang diserap itu disebut ...','kalor lebur','kalor jenis','kalor uap','kalor embun']],
+[['Kalor','C2','Garam ditambahkan ke es batu pada pembuatan es krim karena garam ...','menurunkan titik beku sehingga campuran es–garam dapat lebih dingin daripada 0 °C','menaikkan titik didih air','membuat es berhenti menyerap kalor','memberi rasa pada es krim'],
+['Kalor','C2','Mengapa campuran es batu dan garam dipakai untuk mendinginkan adonan es krim?','karena campuran itu bersuhu di bawah 0 °C sehingga lebih dingin daripada es saja','karena garam menghasilkan kalor','karena es berubah menjadi uap','karena garam membuat adonan lebih manis'],
+['Kalor','C2','Titik beku air yang dicampur dengan garam menjadi ...','lebih rendah daripada 0 °C','lebih tinggi daripada 0 °C','tetap 0 °C','sama dengan 100 °C']],
+[['Suhu','C1','Manakah berikut ini yang paling tepat mendefinisikan suhu?','Ukuran seberapa panas atau dingin suatu benda','Ukuran berat suatu benda','Alat yang digunakan untuk mengukur kalor','Jenis bahan bakar untuk pembakaran'],
+['Suhu','C1','Besaran yang menyatakan derajat panas atau dinginnya suatu benda adalah ...','suhu','kalor','massa','volume'],
+['Suhu','C1','Termometer digunakan untuk mengukur ...','suhu','kalor','massa','panjang']],
+[['Suhu','C2','Manakah dari benda-benda berikut yang memiliki suhu tertinggi?','Sepanci air mendidih (100°C)','Sebuah es batu (0°C)','Keduanya memiliki suhu yang sama','Tidak dapat dibandingkan'],
+['Suhu','C2','Manakah dari benda-benda berikut yang memiliki suhu terendah?','Sebuah es batu (0°C)','Segelas teh hangat (50°C)','Sepanci air mendidih (100°C)','Air keran (28°C)'],
+['Suhu','C2','Segelas air bersuhu 40°C dan segelas air lain bersuhu 60°C. Manakah pernyataan yang benar?','Gelas kedua memiliki suhu lebih tinggi','Gelas pertama memiliki suhu lebih tinggi','Keduanya memiliki suhu yang sama','Tidak dapat dibandingkan']],
+[['Suhu','C1','Manakah satuan suhu berikut yang paling umum digunakan dalam kehidupan sehari-hari di Indonesia?','Celsius (°C)','Fahrenheit (°F)','Kelvin (K)','Reamur (°R)'],
+['Suhu','C1','Dalam ramalan cuaca di Indonesia, suhu udara biasanya dinyatakan dalam satuan ...','Celsius (°C)','Fahrenheit (°F)','Kelvin (K)','Reamur (°R)'],
+['Suhu','C1','Termometer di sekolah dan rumah sakit di Indonesia umumnya memakai skala ...','Celsius (°C)','Fahrenheit (°F)','Kelvin (K)','Reamur (°R)']],
+[['Suhu','C2','Manakah berikut ini yang <b>bukan</b> satuan yang digunakan untuk mengukur suhu?','Kilogram','Celsius','Fahrenheit','Kelvin'],
+['Suhu','C2','Manakah berikut ini yang termasuk satuan suhu?','Kelvin','Meter','Kilogram','Detik'],
+['Suhu','C2','Manakah berikut ini yang <b>bukan</b> skala atau satuan suhu?','Joule','Reamur','Celsius','Kelvin']]];
+function gP5(){var c=pick([['Sebatang rel baja panjangnya {L} m pada suhu {a} °C. Jika koefisien muai panjang baja {al} m/m°C dan suhu rel naik menjadi {b} °C, berapakah pertambahan panjang rel?',12,[8,10,12,15,20]],['Sebuah pipa aluminium sepanjang {L} m dipasang pada suhu {a} °C. Siang hari suhunya naik menjadi {b} °C. Jika koefisien muai panjang aluminium {al} m/m°C, berapakah pertambahan panjang pipa?',24,[4,5,6,8,10]],['Sebatang kuningan panjangnya {L} m bersuhu {a} °C, lalu dipanaskan sampai {b} °C. Jika koefisien muai panjang kuningan {al} m/m°C, berapakah pertambahan panjangnya?',19,[2,3,4,5]]]),A=c[1],L=pick(c[2]),a=pick([20,25,30]),d=pick([20,30,40,50]),mm=A*L*d/1000,al='0,0000'+A;
+return ['Pemuaian','C3',T(c[0],{L:L,a:a,b:a+d,al:al}),f(mm,4)+' mm',f(mm/10,5)+' mm',f(mm*10,3)+' mm',f(mm*100,2)+' mm','ΔT = '+(a+d)+' − '+a+' = '+d+' °C. ΔL = α × L₀ × ΔT = '+al+' m/m°C × '+L+' m × '+d+' °C = '+f(mm/1000,6)+' m = '+f(mm,4)+' mm.']}
+function gP6(){var c=pick([['Sebatang kawat tembaga panjangnya {L} m pada suhu {a} °C, lalu dipanaskan sampai {b} °C. Jika koefisien muai panjang tembaga {al} m/m°C, berapakah panjang kawat setelah dipanaskan?',17],['Sebatang besi panjangnya {L} m bersuhu {a} °C. Besi itu dipanaskan hingga {b} °C. Jika koefisien muai panjang besi {al} m/m°C, berapakah panjang besi setelah dipanaskan?',12],['Sebuah kawat aluminium panjangnya {L} m pada suhu {a} °C. Kawat tersebut dipanaskan sampai {b} °C. Jika koefisien muai panjang aluminium {al} m/m°C, berapakah panjang kawat sekarang?',24]]),A=c[1],L=pick([1,2,3,4,5]),a=pick([20,25,30]),d=pick([40,50,60,80]),dl=A*L*d/1e6,al='0,0000'+A;
+return ['Pemuaian','C3',T(c[0],{L:L,a:a,b:a+d,al:al}),f(L+dl,7)+' m',f(L+dl/10,7)+' m',f(L+dl*10,7)+' m',f(L+dl*100,7)+' m','ΔT = '+(a+d)+' − '+a+' = '+d+' °C. ΔL = '+al+' m/m°C × '+L+' m × '+d+' °C = '+f(dl,6)+' m. Panjang akhir = '+L+' + '+f(dl,6)+' = '+f(L+dl,7)+' m.']}
+function gK5(){var v=pick([0,1,2]),m0=pick([300,400,500,600,800]),x=pick([20,40,60,80,100]),m1=m0-x,Q=x*336,
+q=['Diketahui massa es awal {m0} g dan es yang belum mencair {m1} g. Jika kalor lebur es 336.000 J/kg, berapakah kalor yang diserap es?','Pada praktikum es krim, es batu yang digunakan bermassa {m0} g. Setelah beberapa menit, es yang belum mencair tinggal {m1} g. Jika kalor lebur es 336.000 J/kg, berapakah kalor yang diserap es?','Sebongkah es bermassa {m0} g menyerap kalor sehingga {x} g di antaranya melebur menjadi air. Jika kalor lebur es 336.000 J/kg, berapakah kalor yang diserap es?'][v];
+return ['Kalor','C3',T(q,{m0:m0,m1:m1,x:x}),f(Q)+' J',f(Q/10)+' J',f(m0*336)+' J',f(m1*336)+' J',(v<2?'Massa es yang melebur = '+m0+' − '+m1+' = '+x+' g':'Massa es yang melebur = '+x+' g')+' = '+f(x/1000,3)+' kg. Q = m × L = '+f(x/1000,3)+' × 336.000 = '+f(Q)+' J.']}
+function gK6(){var m=pick([25,50,62.5,75,100,125,150]),Q=m*336,q=pick(['Sebuah es menyerap kalor {Q} J hingga melebur. Jika kalor lebur es 336.000 J/kg, berapakah massa es yang melebur?','Pada praktikum es krim, sebongkah es batu menyerap kalor {Q} J sampai seluruhnya melebur. Jika kalor lebur es 336.000 J/kg, berapakah massa es batu tersebut?','Untuk melebur seluruhnya pada titik leburnya, sepotong es memerlukan kalor {Q} J. Jika kalor lebur es 336.000 J/kg, berapakah massa es itu?']);
+return ['Kalor','C3',T(q,{Q:f(Q)}),f(m,2)+' g',f(m/10,3)+' g',f(m*10,2)+' g',f(m*100,1)+' g','m = Q ÷ L = '+f(Q)+' ÷ 336.000 = '+f(m/1000,5)+' kg = '+f(m,2)+' g.']}
+function gS11(){var v=pick([0,1,2]),c=pick([15,20,25,30,35,45]),F=1.8*c+32,u='°C';
+if(v==2)return ['Suhu','C3','Sebuah termometer Fahrenheit menunjukkan '+f(F)+'°F. Berapakah suhu tersebut dalam Celsius?',c+u,f(F-32)+u,f(F*5/9,1)+u,(c+10)+u,'°C = (5/9) × (°F − 32) = (5/9) × ('+f(F)+' − 32) = '+c+u+'.'];
+return ['Suhu','C3',v?'Sebuah termometer di kelas menunjukkan '+c+'°C. Berapakah suhu tersebut pada skala Fahrenheit?':'Suhu sebuah ruangan adalah '+c+'°C. Berapakah suhu ruangan tersebut dalam Fahrenheit?',f(F,1)+'°F',f(1.8*c,1)+'°F',f(c+32)+'°F',f(F+9,1)+'°F','°F = (9/5 × °C) + 32 = (9/5 × '+c+') + 32 = '+f(F,1)+'°F.']}
+function gS12(){var v=pick([0,1,2]),C=pick([10,20,25,30,37,40,50]),K=C+273;
+if(v==1)return ['Suhu','C3','Suhu sebuah zat adalah '+C+'°C. Berapakah suhu tersebut dalam Kelvin?',K+' K',C+' K',f(C-273)+' K',(K+10)+' K','K = °C + 273 = '+C+' + 273 = '+K+' K.'];
+return ['Suhu','C3',v?'Suhu udara di sebuah ruangan terbaca '+K+' K pada termometer skala Kelvin. Berapakah suhu tersebut dalam Celsius?':'Sebuah termometer menunjukkan '+K+' Kelvin. Berapakah suhu tersebut dalam Celsius?',C+'°C',K+'°C',(C+10)+'°C','−273°C','°C = K − 273 = '+K+' − 273 = '+C+'°C.']}
+function build(){var o=[],i;for(i=0;i<4;i++)o.push(pick(S[i]));o.push(gP5(),gP6());for(i=4;i<8;i++)o.push(pick(S[i]));o.push(gK5(),gK6());for(i=8;i<12;i++)o.push(pick(S[i]));o.push(gS11(),gS12());return o}
+//UI
+var items=[],idx=0,sc=0,res=[],cur=[],sel=-1,nama='';
+function showS(id){var a=['s0','s1','s2'],i;for(i=0;i<3;i++)$(a[i]).style.display=(a[i]==id?'block':'none')}
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function start(){nama=$('nm').value;restart()}
+function restart(){items=build();idx=0;sc=0;res=[];showS('s1');showQ();window.scrollTo(0,0)}
+function showQ(){var it=items[idx],s='',i;cur=shuf(it.slice(3,7));sel=-1;
+$('pg').innerHTML='Soal '+(idx+1)+' dari '+items.length;$('tg').innerHTML=it[0]+' \u00b7 '+it[1];$('bf').style.width=(idx/items.length*100)+'%';$('qt').innerHTML=it[2];
+for(i=0;i<cur.length;i++)s+='<button class="opt" onclick="ans('+i+')"><b>'+'abcd'.charAt(i)+'.</b> '+cur[i]+'</button>';
+$('op').innerHTML=s;$('nx').style.display='none'}
+function ans(i){sel=i;var b=$('op').getElementsByTagName('button'),j;for(j=0;j<b.length;j++)b[j].className=(j==i?'opt sel':'opt');
+$('nx').innerHTML=(idx==items.length-1?'Selesai':'Lanjut');$('nx').style.display='inline-block'}
+function nextQ(){if(sel<0)return;var it=items[idx],ok=(cur[sel]===it[3]);if(ok)sc++;
+res.push({n:idx+1,t:it[0],l:it[1],ok:ok,q:it[2],a:it[3],m:cur[sel],e:it[7]||''});sel=-1;idx++;if(idx>=items.length)result();else showQ()}
+function tab(key,h){var m={},n=[],i,k,s='<table><thead><tr><th>'+h+'</th><th>Benar</th><th>Soal</th><th>%</th></tr></thead><tbody>';
+for(i=0;i<res.length;i++){k=res[i][key];if(!m[k]){m[k]={b:0,t:0};n.push(k)}m[k].t++;if(res[i].ok)m[k].b++}
+if(key=='l')n.sort();
+for(i=0;i<n.length;i++)s+='<tr><td>'+n[i]+'</td><td>'+m[n[i]].b+'</td><td>'+m[n[i]].t+'</td><td>'+Math.round(m[n[i]].b/m[n[i]].t*100)+'</td></tr>';
+return s+'</tbody></table>'}
+function grade(p){return p>=100?['SS','#e0a800','Sempurna!']:p>=90?['S','#f08c00','Luar biasa!']:p>=80?['A','#2f9e44','Bagus sekali!']:p>=70?['B','#1c7ed6','Bagus, terus berlatih!']:p>=60?['C','#9c36b5','Cukup baik, ayo tingkatkan.']:['D','#e03131','Ayo belajar lagi dan coba lagi.']}
+function result(){var N=items.length,i,w='',r,pc=sc/N*100,g=grade(pc);
+for(i=0;i<res.length;i++){r=res[i];if(!r.ok)w+='<p><b>Soal '+r.n+' ('+r.l+')</b><br>'+r.q+'<br>Jawabanmu: '+r.m+'<br>Jawaban benar: <b>'+r.a+'</b>'+(r.e?'<br><span class="note">'+r.e+'</span>':'')+'</p>'}
+$('s2').innerHTML='<div class="card"><h2>Hasil latihan</h2><div class="rw"><div class="rk" style="color:'+g[1]+';text-shadow:0 5px 0 rgba(0,0,0,.18),0 0 18px '+g[1]+'">'+g[0]+'</div><div class="ri">'+(nama?'<p>Nama: <b>'+esc(nama)+'</b></p>':'')+'<p class="big">'+sc+' / '+N+'</p><p>Nilai: <b>'+Math.round(pc)+'</b></p><p class="cap" style="color:'+g[1]+'">'+g[2]+'</p></div></div>'+tab('t','Topik')+tab('l','Level')+
+'<p class="note">Peringkat: SS = 100, S \u2265 90, A \u2265 80, B \u2265 70, C \u2265 60, D di bawah 60.</p><button class="btn" onclick="restart()">Ulangi</button></div>'+
+'<div class="card"><h2>Pembahasan soal yang belum tepat</h2>'+(w||'<p>Semua jawabanmu benar. Hebat!</p>')+'</div>';
+showS('s2');window.scrollTo(0,0)}
+</script></body></html>
